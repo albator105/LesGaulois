@@ -25,5 +25,12 @@ public class Romain {
 	public int getForce() {
 		return force;
 	}
-
+	public void recevoirCoup(int forcecoup) {
+		this.force = this.force - forcecoup;
+		if (this.force < 1) {System.out.println(prendreParole() + "J'abandonne");}
+		else {System.out.println(prendreParole() + "aie");}
+		
+		
+		
+	}
 }
