@@ -1,8 +1,12 @@
 package personnage;
 
+import objets.Equipement;
+
 public class Romain {
 	private String nom;
 	private int force;
+	private Equipement[] equipements = new Equipement[2];
+	private int nbEquipement = 0;
 
 	public Romain(String nom, int force) {
 		this.nom = nom;
@@ -28,7 +32,7 @@ public class Romain {
 	}
 
 	public void recevoirCoup(int forcecoup) {
-		assert forcecoup >= 0;
+		assert isForcecoupPositive(forcecoup);
 		int forceInitiale = this.force;
 		this.force = this.force - forcecoup;
 		if (this.force < 1) {
@@ -37,9 +41,11 @@ public class Romain {
 			System.out.println(prendreParole() + "aie");
 		}
 		assert this.isInvariantVerified();
-		assert this.force <= forceInitiale;
+		assert isForceDecreased(forceInitiale);
 
 	}
+	private boolean isForcecoupPositive(int forcecoup) {return forcecoup >= 0;}
+	private boolean isForceDecreased(int forceInitiale) {return forceInitiale >= this.force;}
 
 	private boolean isInvariantVerified() {
 		if (this.force >= 0) {
@@ -48,9 +54,48 @@ public class Romain {
 			return false;
 	}
 	
+	public void sEquiper(Equipement equipement) {
+		switch (this.nbEquipement){
+		case 2: {
+			
+			System.out.println("le soldat "+this.getNom()+" est deja bien equipé");
+			break;
+		}
+		case 1: {
+			if (equipement.toString() == this.equipements[nbEquipement-1].toString()) {
+				System.out.println("le soldat "+this.getNom()+" possède deja un "+equipement.toString());
+				break;
+			}
+			else {
+				this.equipements[nbEquipement] = equipement;
+				nbEquipement++;
+				System.out.println("Le soldat "+this.getNom()+" s'equipe avec un "+ equipement.toString());
+				break;
+			}
+		}
+		case 0: {
+			this.equipements[nbEquipement] = equipement;
+			nbEquipement++;
+			System.out.println("Le soldat "+this.getNom()+" s'equipe avec un "+equipement.toString());
+			break;
+		}}}
+		
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
 		Romain minus = new Romain("Minus",6);
+		
+		minus.sEquiper(Equipement.CASQUE);
+		minus.sEquiper(Equipement.CASQUE);
+		minus.sEquiper(Equipement.BOUCLIER);
+		minus.sEquiper(Equipement.CASQUE);
 	}
 	
 	
